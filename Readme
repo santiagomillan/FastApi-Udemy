@@ -1,0 +1,8 @@
+para activar venv
+
+- cd .\venv\Scripts
+- .\activate
+
+instalar dependencias
+
+- pip install fastapi uvicorn
