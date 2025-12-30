@@ -2,6 +2,23 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+productos = []
+
 @app.get("/productos")
 def listar_productos():
-    return {"productos": ["Producto 1", "Producto 2", "Producto 3"]}
+    return {"productos": productos}
+
+@app.post("/productos")
+def agregar_producto(nombre: str):
+    productos.append(nombre)
+    return {"mensaje": "Producto agregado", "producto": nombre}
+
+@app.put("/productos/{id}")
+def actualizar_producto(id: int, nombre: str):
+    productos[id] = nombre
+    return {"mensaje": "Producto actualizado", "producto": nombre}
+
+@app.delete("/productos/{id}")
+def eliminar_producto(id: int):
+    producto_eliminado = productos.pop(id)
+    return {"mensaje": "Producto eliminado", "producto": producto_eliminado}
