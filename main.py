@@ -1,6 +1,12 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
+
+class Producto(BaseModel):
+    nombre: str
+    precio: float
+    en_stock: bool
 
 productos = []
 
@@ -9,9 +15,9 @@ def listar_productos():
     return {"productos": productos}
 
 @app.post("/productos")
-def agregar_producto(nombre: str):
-    productos.append(nombre)
-    return {"mensaje": "Producto agregado", "producto": nombre}
+def agregar_producto(producto: Producto):
+    productos.append(producto)
+    return {"mensaje": "Producto agregado", "producto": producto}
 
 @app.put("/productos/{id}")
 def actualizar_producto(id: int, nombre: str):
