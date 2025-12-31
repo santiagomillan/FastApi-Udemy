@@ -7,7 +7,7 @@ class ProductoCreate(BaseModel):
     nombre: str
     precio: float
     en_stock: bool
-    stock: int
+    # stock: int
     categoria_id: int
 
 class ProductoResponse(ProductoCreate):

@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from fastapi import Depends
-from database import SessionmLocal
+# from database import SessionmLocal
 
 
 DATABASE_URL = "postgresql://postgres:1998@localhost:5432/ecommerce_db"
