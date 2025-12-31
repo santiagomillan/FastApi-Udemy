@@ -16,3 +16,7 @@ from sqlalchemy.orm import sessionmaker --> crea sesiones para coneccion con bd
 # --
 
 Para crear las tablas ejecutar crear_tablas.py
+
+instalar
+pip install 'pydantic[email]' --> valida str (correo)
+pip install passlib[bcrypy] --> encripar
