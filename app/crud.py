@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session 
-from models import Producto, Categoria
+from models import Producto, Categoria, Usuario
 from schemas import *
+from utils import hash_password
+from sqlalchemy import or_
 # from models.producto import Producto
 # from schemas.producto import ProductoCreate
 
@@ -48,3 +50,29 @@ def crear_categoria(db: Session, categoria:CategoriaCreate):
 
 def obtener_categorias(db:Session):
     return db.query(Categoria).all()
+
+### Usuarios CRUD
+
+def obtener_usuario_por_email(db: Session, email: str) -> Usuario | None:
+    return db.query(Usuario).filter(Usuario.email == email).first()
+
+def obtener_usuario_por_id(db: Session, usuario_id: str) -> Usuario | None:
+    return db.query(Usuario).filter(Usuario.id == usuario_id).first()
+
+def crear_usuario(db:Session, usuario: UsuarioCreate) -> Usuario:
+    existe = db.query(Usuario).filter(
+        or_(Usuario.email == usuario.email, Usuario.nombre == usuario.nombre)
+    ).first()
+    if existe:
+        raise ValueError("Ya existe un usuario con este Email o Nombre")
+    
+    db_usuario = Usuario(
+        nombre = usuario.nombre,
+        email = usuario.email,
+        hash_password = hash_password(usuario.password),
+        es_admin = usuario.es_admin
+    )   
+    db.add(db_usuario)
+    db.commit()
+    db.refresh(db_usuario)
+    return db_usuario
