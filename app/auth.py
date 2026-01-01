@@ -5,11 +5,15 @@ SECRET_KEY = "clave_secreta"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-def crear_token(data:dict):
-    to_encode = data.copy()
+def crear_token(sub:str, es_admin:bool):
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp" : expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    data = {
+        "sub": sub,
+        "exp": expire,
+        "es_admin": es_admin
+    }
+    token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
+    return token
 
 def verificar_token(token:str):
     try:
