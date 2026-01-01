@@ -63,4 +63,10 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session =Depends
     token = crear_token(sub=user.email, es_admin=user.es_admin)
     return {"access_token": token, "token_type": "bearer"}
 
+@app.get("/usuarios/me", response_model=schemas.UsuarioResponse)
+def leer_perfil(current_user = Depends(get_current_user)):
+    return current_user
 
+@app.get("/admin/ping")
+def admin_ping(_admin = Depends(require_admin)):
+    return{"ok": True, "role": "admin"}
