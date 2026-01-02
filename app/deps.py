@@ -3,7 +3,7 @@ from fastapi import Depends, HTTPException, status
 from jose import JWTError
 from sqlalchemy.orm import Session
 from database import SessionLocal, get_db
-from auth import  verificar_token
+from authSecurity import  verificar_token
 import crud
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")

@@ -20,5 +20,8 @@ Para crear las tablas ejecutar crear_tablas.py
 instalar
 pip install 'pydantic[email]' --> valida str (correo)
 pip install passlib[bcrypt]--> encripar
+pip install bcrypt==4.0.1 --> encriptar contraseñas
+pip install passlib
 pip install python-jose[cryptography]
+pip install bcrypt==4.0.1
 pip install python-multipart
