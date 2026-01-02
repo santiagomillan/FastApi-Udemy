@@ -1,25 +1,25 @@
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
+from.config import setting
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-SECRET_KEY = "clave_secreta"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
 
 def crear_token(sub:str, es_admin:bool):
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow() + timedelta(minutes=setting.ACCESS_TOKEN_EXPIRE_MINUTES)
     data = {
         "sub": sub,
         "exp": expire,
         "es_admin": es_admin
     }
-    token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
+    token = jwt.encode(data, setting.SECRET_KEY, algorithm= setting.ALGORITHM)
     return token
 
 def verificar_token(token:str):
     try:
-        payload= jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload= jwt.decode(token, setting.SECRET_KEY, algorithms=[setting.ALGORITHM])
         return payload
     except JWTError:
         return None

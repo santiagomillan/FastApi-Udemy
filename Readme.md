@@ -25,3 +25,4 @@ pip install passlib
 pip install python-jose[cryptography]
 pip install bcrypt==4.0.1
 pip install python-multipart
+pip install python-dotenv
